@@ -32,4 +32,35 @@ public class TestController {
 	public String testHelloWorld(String world) {
 		return "hello, " + world;
 	}
+
+	static class Pair {
+		public Pair(int f, int s) {
+			this.f = f;
+			this.s = s;
+		}
+
+		
+		public int getF() {
+			return f;
+		}
+		public void setF(int f) {
+			this.f = f;
+		}
+		public int getS() {
+			return s;
+		}
+		public void setS(int s) {
+			this.s = s;
+		}
+
+
+		int f;
+		int s;
+	}
+
+	@ResponseBody
+	@RequestMapping("/json")
+	public Pair json() {
+		return new Pair(1, 2);
+	}
 }

@@ -13,6 +13,22 @@
 	<context:annotation-config />
 	<context:component-scan base-package="study"></context:component-scan>
 	
+	<bean
+        class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+    <bean
+        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean
+                    class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <constructor-arg value="UTF-8" />
+                </bean>
+                <bean
+                    class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+    
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
