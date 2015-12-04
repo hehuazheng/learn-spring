@@ -11,7 +11,7 @@
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://qserver1:3306/study?characterEncoding=UTF8"
+			connectionURL="jdbc:mysql://qserver2:3306/study?characterEncoding=UTF8"
 			userId="root" password="root">
 		</jdbcConnection>
 
@@ -20,33 +20,24 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<javaModelGenerator targetPackage="study.dao.model"
+		<javaModelGenerator targetPackage="study.dao.dependencysystem.model"
 			targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
-		<sqlMapGenerator targetPackage="study.dao.mapper"
+		<sqlMapGenerator targetPackage="study.dao.dependencysystem.mapper"
 			targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="study.dao.mapper"
-			targetProject="src\main\java">
+			targetPackage="study.dao.dependencysystem.mapper" targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-        <table schema="tb1" tableName="tb1" enableCountByExample="false"
-            enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
-            enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
-            <property name="useActualColumnNames" value="false" />
-        </table>
-		
-		<table schema="tb2" tableName="tb2" enableCountByExample="false"
-            enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
-            enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
-            <property name="useActualColumnNames" value="false" />
-        </table>
+		<table schema="q2tb1" tableName="q2tb1">
+			<property name="useActualColumnNames" value="false" />
+		</table>
 	</context>
 </generatorConfiguration>

@@ -1,26 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- configuration file for LogBack (slf4J implementation)
-See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
-<configuration scan="true" scanPeriod="30 seconds">
-
-    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
-        <resetJUL>true</resetJUL>
-    </contextListener>
-
-    <!-- To enable JMX Management -->
-    <jmxConfigurator/>
-
+<!DOCTYPE configuration>
+<configuration>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-5level %logger{0} - %msg%n</pattern>
+            <pattern>%d %p [%t] [%X{sys} %X{env} %X{caller} %X{traceId}] - %m%n</pattern>
         </encoder>
     </appender>
-
-	<!--<logger name="org.hibernate" level="debug"/> -->
-   <!-- Uncomment and add your logger here:
-    <logger name="org.springframework.samples.service.service" level="debug"/> -->
-         
+    <appender name="info"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <param name="file" value="${catalina.base}/logs/info.log" />
+        <param name="Encoding" value="UTF-8" />
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.base}/logs/info.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p [%t][%X{sys} %X{env} %X{caller} %X{traceId}] - %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="error"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <param name="file" value="${catalina.base}/logs/error.log" />
+        <param name="Encoding" value="UTF-8" />
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.base}/logs/error.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>72</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p [%t][%X{sys} %X{env} %X{caller} %X{traceId}] - %m%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 邮件日志 -->
+<!--     <appender name="mail" class="ch.qos.logback.classic.net.SMTPAppender"> -->
+<!--         <bufferSize>512</bufferSize> -->
+<!--         <SMTPHost>smtp.163.com</SMTPHost> -->
+<!--         <smtpPort>25</smtpPort> -->
+<!--         <username>scm_base_monitor</username> -->
+<!--         <password>QAZwsxEDC</password> -->
+<!--         <From>scm_base_monitor@163.com</From> -->
+<!--         <To>wangdexian@secoo.com</To> -->
+<!--         <subject>scm-%X{env} - %m{20}</subject> -->
+<!--         <layout class="ch.qos.logback.classic.html.HTMLLayout"> -->
+<!--             <pattern>%d%t%X{sys}%X{env}%X{caller}%X{traceId}%msg</pattern> -->
+<!--         </layout> -->
+<!--     </appender> -->
+    <logger name="study" level="debug">
+       <appender-ref ref="console" />
+    </logger>
+<!--     <logger name="error_mail_logger" additivity="false"> -->
+<!--         <appender-ref ref="console" /> -->
+<!--         <appender-ref ref="error" /> -->
+<!--         <appender-ref ref="mail" /> -->
+<!--     </logger> -->
     <root level="info">
-        <appender-ref ref="console"/>
+        <appender-ref ref="console" />
+        <appender-ref ref="info" />
     </root>
 </configuration>
