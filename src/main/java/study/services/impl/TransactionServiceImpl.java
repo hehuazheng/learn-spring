@@ -58,18 +58,33 @@ public class TransactionServiceImpl implements TransactionService {
 		realTrick(id, rollback);
 	}
 
+	public void testPrivateMethodTransaction(int id, String value) {
+		privateMethodTransaction(id, value);
+	}
+	
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-	public void insertInto2Tables(int id, String value) {
+	private void privateMethodTransaction(int id, String value) {
 		Tb1 tb1 = new Tb1();
 		tb1.setId(id);
 		tb1.setCol1("tb1-" + value);
-		int cnt = tb1Mapper.updateByPrimaryKey(tb1);
-		Preconditions.checkArgument(cnt > 0);
+		Preconditions.checkArgument(tb1Mapper.updateByPrimaryKey(tb1) > 0);
 
 		Tb2 tb2 = new Tb2();
 		tb2.setId(id);
 		tb2.setCol1("tb2-" + value);
-		tb2Mapper.updateByPrimaryKey(tb2);
-		Preconditions.checkArgument(cnt > 0);
+		Preconditions.checkArgument(tb2Mapper.updateByPrimaryKey(tb2) > 0);
+	}
+
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+	public final void testFinalMethodTransaction(int id, String value) {
+		Tb1 tb1 = new Tb1();
+		tb1.setId(id);
+		tb1.setCol1("tb1-" + value);
+		Preconditions.checkArgument(tb1Mapper.updateByPrimaryKey(tb1) > 0);
+
+		Tb2 tb2 = new Tb2();
+		tb2.setId(id);
+		tb2.setCol1("tb2-" + value);
+		Preconditions.checkArgument(tb2Mapper.updateByPrimaryKey(tb2) > 0);
 	}
 }

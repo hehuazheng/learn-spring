@@ -5,5 +5,7 @@ public interface TransactionService {
 
 	void insertRequiredNew(int id, boolean rollback);
 	
-	void insertInto2Tables(int id, String value);
+	void testPrivateMethodTransaction(int id, String value);
+	
+	void testFinalMethodTransaction(int id, String value);
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import study.dao.dependencysystem.mapper.Q2tb1Mapper;
 import study.dao.dependencysystem.model.Q2tb1;
 import study.services.MultiDataSourceService;
+import study.services.TransactionService;
 
 @Controller
 @RequestMapping("/test")
@@ -17,6 +18,9 @@ public class TestController {
 	
 	@Autowired
 	private MultiDataSourceService multiDataSourceService;
+	
+	@Autowired
+	private TransactionService transactionService;
 	
 	@ResponseBody
 	@RequestMapping("/q2select")
@@ -47,6 +51,20 @@ public class TestController {
 	@RequestMapping("multiDSSameInstanceTran")
 	public String testMultiDatasourceOnSameInstanceTransaction(int id, String value) {
 		return multiDataSourceService.updateByIdOnSameInstance(id, value);
+	}
+	
+	@ResponseBody
+	@RequestMapping("testPrivateTransaction") 
+	public String testPrivateMethodTransaction(int id, String value) {
+		transactionService.testPrivateMethodTransaction(id, value);
+		return "succ";
+	}
+	
+	@ResponseBody
+	@RequestMapping("testFinalTransaction") 
+	public String testFinalTransaction(int id, String value) {
+		transactionService.testFinalMethodTransaction(id, value);
+		return "succ";
 	}
 	
 }
