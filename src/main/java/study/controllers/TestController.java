@@ -7,30 +7,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import study.dao.dependencysystem.mapper.Q2tb1Mapper;
 import study.dao.dependencysystem.model.Q2tb1;
-import study.services.LoopInsertService;
+import study.services.MultiDataSourceService;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
-	private LoopInsertService loopInsertService;
+	private Q2tb1Mapper q2tb1Mapper;
 	
 	@Autowired
-	private Q2tb1Mapper q2tb1Mapper;
-
-	@ResponseBody
-	@RequestMapping("/testTrac")
-	public String testTransaction(String ids, int stop) {
-		loopInsertService.insert(ids, stop);
-		return "succ";
-	}
-
-	@ResponseBody
-	@RequestMapping("/testTracNew")
-	public String testTransactionRequiredNew(String ids, int stop) {
-		loopInsertService.insertNew(ids, stop);
-		return "succ";
-	}
+	private MultiDataSourceService multiDataSourceService;
 	
 	@ResponseBody
 	@RequestMapping("/q2select")
@@ -44,4 +30,23 @@ public class TestController {
 	public String testHelloWorld(String world) {
 		return "hello, " + world;
 	}
+	
+	@ResponseBody
+	@RequestMapping("selectFromMultiDS")
+	public String testSelectFromMultiDS(int id) {
+		return multiDataSourceService.selectById(id);
+	}
+	
+	@ResponseBody
+	@RequestMapping("multiDSTran")
+	public String testMultiDatasourceTransaction(int id, String value) {
+		return multiDataSourceService.updateById(id, value);
+	}
+	
+	@ResponseBody
+	@RequestMapping("multiDSSameInstanceTran")
+	public String testMultiDatasourceOnSameInstanceTransaction(int id, String value) {
+		return multiDataSourceService.updateByIdOnSameInstance(id, value);
+	}
+	
 }

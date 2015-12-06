@@ -1,4 +1,4 @@
-package study.services;
+package study.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,10 +7,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.google.common.base.Preconditions;
+
 import study.dao.mapper.Tb1Mapper;
 import study.dao.mapper.Tb2Mapper;
 import study.dao.model.Tb1;
 import study.dao.model.Tb2;
+import study.services.TransactionService;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -53,5 +56,20 @@ public class TransactionServiceImpl implements TransactionService {
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
 	public void insertRequiredNew(int id, boolean rollback) {
 		realTrick(id, rollback);
+	}
+
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+	public void insertInto2Tables(int id, String value) {
+		Tb1 tb1 = new Tb1();
+		tb1.setId(id);
+		tb1.setCol1("tb1-" + value);
+		int cnt = tb1Mapper.updateByPrimaryKey(tb1);
+		Preconditions.checkArgument(cnt > 0);
+
+		Tb2 tb2 = new Tb2();
+		tb2.setId(id);
+		tb2.setCol1("tb2-" + value);
+		tb2Mapper.updateByPrimaryKey(tb2);
+		Preconditions.checkArgument(cnt > 0);
 	}
 }

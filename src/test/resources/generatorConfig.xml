@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 	<classPathEntry
-		location="D:\devtools\maven-repository\mysql\mysql-connector-java\5.1.27\mysql-connector-java-5.1.27.jar" />
+		location="C:\Users\hejf\.m2\repository\mysql\mysql-connector-java\5.1.27\mysql-connector-java-5.1.27.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
@@ -37,15 +37,15 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-        <table schema="tb1" tableName="tb1" enableCountByExample="false"
-            enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
-            enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
+        <table schema="tb1" tableName="tb1">
             <property name="useActualColumnNames" value="false" />
         </table>
 		
-		<table schema="tb2" tableName="tb2" enableCountByExample="false"
-            enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
-            enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
+		<table schema="tb2" tableName="tb2">
+            <property name="useActualColumnNames" value="false" />
+        </table>
+        
+		<table schema="s2tb1" tableName="s2tb1">
             <property name="useActualColumnNames" value="false" />
         </table>
 	</context>

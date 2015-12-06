@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="study.dao.mapper.Tb2Mapper" >
-  <resultMap id="BaseResultMap" type="study.dao.model.Tb2" >
+<mapper namespace="study.dao.dependencysystem.mapper.Q2tb2Mapper" >
+  <resultMap id="BaseResultMap" type="study.dao.dependencysystem.model.Q2tb2" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="col1" property="col1" jdbcType="VARCHAR" />
   </resultMap>
@@ -66,13 +66,13 @@
   <sql id="Base_Column_List" >
     id, col1
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="study.dao.model.Tb2Example" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="study.dao.dependencysystem.model.Q2tb2Example" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb2
+    from q2tb2
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,25 +83,25 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from tb2
+    from q2tb2
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb2
+    delete from q2tb2
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="study.dao.model.Tb2Example" >
-    delete from tb2
+  <delete id="deleteByExample" parameterType="study.dao.dependencysystem.model.Q2tb2Example" >
+    delete from q2tb2
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="study.dao.model.Tb2" >
-    insert into tb2 (id, col1)
+  <insert id="insert" parameterType="study.dao.dependencysystem.model.Q2tb2" >
+    insert into q2tb2 (id, col1)
     values (#{id,jdbcType=INTEGER}, #{col1,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="study.dao.model.Tb2" >
-    insert into tb2
+  <insert id="insertSelective" parameterType="study.dao.dependencysystem.model.Q2tb2" >
+    insert into q2tb2
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -119,14 +119,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="study.dao.model.Tb2Example" resultType="java.lang.Integer" >
-    select count(*) from tb2
+  <select id="countByExample" parameterType="study.dao.dependencysystem.model.Q2tb2Example" resultType="java.lang.Integer" >
+    select count(*) from q2tb2
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update tb2
+    update q2tb2
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
@@ -140,15 +140,15 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update tb2
+    update q2tb2
     set id = #{record.id,jdbcType=INTEGER},
       col1 = #{record.col1,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="study.dao.model.Tb2" >
-    update tb2
+  <update id="updateByPrimaryKeySelective" parameterType="study.dao.dependencysystem.model.Q2tb2" >
+    update q2tb2
     <set >
       <if test="col1 != null" >
         col1 = #{col1,jdbcType=VARCHAR},
@@ -156,8 +156,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="study.dao.model.Tb2" >
-    update tb2
+  <update id="updateByPrimaryKey" parameterType="study.dao.dependencysystem.model.Q2tb2" >
+    update q2tb2
     set col1 = #{col1,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
