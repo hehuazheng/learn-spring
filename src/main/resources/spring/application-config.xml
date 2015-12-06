@@ -56,4 +56,6 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<property name="basePackage" value="study"></property>
 	</bean>
+	
+	<bean class="study.aop.MyTracingBeanPostProcessor" />
 </beans>
