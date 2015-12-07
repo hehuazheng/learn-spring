@@ -29,7 +29,16 @@
         </property>
     </bean>
     
-	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+	<bean id="readDataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl"
+			value="jdbc:mysql://qserver1:3306/studyread?characterEncoding=UTF8" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	
+	<bean id="writeDataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"
@@ -37,12 +46,25 @@
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"
-		proxy-target-class="false" />
+	
+    <!-- 读写分离数据源 -->
+    <bean id="dataSource"
+        class="com.pj.common.db.RoutingDataSource">
+        <property name="writeDataSource" ref="writeDataSource" />
+        <property name="readDataSourceMap">
+            <map key-type="java.lang.String" value-type="javax.sql.DataSource">
+                <entry key="read" value-ref="readDataSource" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- 事务配置 -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:/spring/mybatis-config.xml"></property>
@@ -56,4 +78,16 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<property name="basePackage" value="study"></property>
 	</bean>
+	
+	<bean id="routingAop" class="com.pj.common.db.aop.RoutingAop" />
+    <aop:config>
+        <aop:aspect ref="routingAop">
+            <aop:around method="aroundRead" arg-names="read"
+                pointcut="@annotation(read) " />
+        </aop:aspect>
+        <aop:aspect ref="routingAop">
+            <aop:around method="aroundWrite" arg-names="write"
+                pointcut="@annotation(write)" />
+        </aop:aspect>
+    </aop:config>
 </beans>
