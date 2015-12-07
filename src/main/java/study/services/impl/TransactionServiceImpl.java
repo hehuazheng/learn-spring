@@ -23,7 +23,7 @@ public class TransactionServiceImpl implements TransactionService {
 	// 1 private 事务不生效
 	// 2 final 事务不生效
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-	public void insert(int id) {
+	public void insertIntoTwoTables(int id) {
 		realTrick(id);
 	}
 
