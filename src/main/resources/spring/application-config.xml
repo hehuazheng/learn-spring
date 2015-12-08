@@ -58,4 +58,6 @@
 	</bean>
 	
 	<bean class="study.aop.MyTracingBeanPostProcessor" />
+	
+	<aop:aspectj-autoproxy />
 </beans>

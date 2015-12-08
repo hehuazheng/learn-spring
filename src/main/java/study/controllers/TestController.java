@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import study.services.RecordTimeService;
 import study.services.TestTransactionService;
 import study.services.TransactionService;
 
@@ -16,6 +17,9 @@ public class TestController {
 
 	@Autowired
 	private TestTransactionService testTransactionService;
+	
+	@Autowired
+	private RecordTimeService recordTimeService;
 	
 	@ResponseBody
 	@RequestMapping("/testAdd")
@@ -37,4 +41,10 @@ public class TestController {
 		return "hello, " + world;
 	}
 
+	@ResponseBody
+	@RequestMapping("/m1")
+	public String testM1() {
+		recordTimeService.m1();
+		return "m1...";
+	}
 }
