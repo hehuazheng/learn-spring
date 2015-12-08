@@ -2,8 +2,6 @@ package study.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import study.dao.mapper.Tb1Mapper;
@@ -22,7 +20,6 @@ public class TransactionServiceImpl implements TransactionService {
 
 	// 1 private 事务不生效
 	// 2 final 事务不生效
-	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 	public void insertIntoTwoTables(int id) {
 		realTrick(id);
 	}

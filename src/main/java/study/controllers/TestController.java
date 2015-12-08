@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import study.services.RecordTimeService;
-import study.services.TestTransactionService;
 import study.services.TransactionService;
 
 @Controller
@@ -16,18 +15,8 @@ public class TestController {
 	private TransactionService transactionService;
 
 	@Autowired
-	private TestTransactionService testTransactionService;
-	
-	@Autowired
 	private RecordTimeService recordTimeService;
-	
-	@ResponseBody
-	@RequestMapping("/testAdd")
-	public String testAddInto2TablesTransaction(String id) {
-		testTransactionService.addInto2Tables(Integer.parseInt(id));
-		return "succ";
-	}
-	
+
 	@ResponseBody
 	@RequestMapping("/testTrac")
 	public String testTransaction(String id) {

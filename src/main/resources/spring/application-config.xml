@@ -41,8 +41,7 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"
-		proxy-target-class="false" />
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:/spring/mybatis-config.xml"></property>
@@ -57,7 +56,16 @@
 		<property name="basePackage" value="study.dao"></property>
 	</bean>
 	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	   <tx:attributes>
+	       <tx:method name="insertInto*" propagation="REQUIRED" />
+	   </tx:attributes>
+	</tx:advice>
+	
 	<bean class="study.aop.MyTracingBeanPostProcessor" />
 	
-	<aop:aspectj-autoproxy />
+	<aop:config>
+	   <aop:pointcut expression="execution(* study.services..*(..))" id="allTransactionalServicePointcut"/>
+	   <aop:advisor pointcut-ref="allTransactionalServicePointcut" advice-ref="txAdvice" />
+	</aop:config>
 </beans>
