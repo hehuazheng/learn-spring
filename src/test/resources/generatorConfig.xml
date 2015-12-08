@@ -41,12 +41,14 @@
             enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
             enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="mysql" type="post" identity="true"/>
         </table>
 		
 		<table schema="tb2" tableName="tb2" enableCountByExample="false"
             enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
             enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="mysql" type="post" identity="true"/>
         </table>
 	</context>
 </generatorConfiguration>
