@@ -13,6 +13,14 @@
 	<context:annotation-config />
 	<context:component-scan base-package="study"></context:component-scan>
 	
+      <bean
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config.properties</value>
+            </list>
+        </property>
+    </bean>
 	<bean
         class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
     <bean
@@ -56,4 +64,8 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<property name="basePackage" value="study"></property>
 	</bean>
+ 
+    <bean class="study.component.TestInjectionComponent">
+        <property name="testProperty" value="${test.property}"></property>
+    </bean>
 </beans>
