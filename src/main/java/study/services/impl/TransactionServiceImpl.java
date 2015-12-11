@@ -2,57 +2,39 @@ package study.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import study.dao.mapper.Tb1Mapper;
-import study.dao.mapper.Tb2Mapper;
-import study.dao.model.Tb1;
-import study.dao.model.Tb2;
+import study.common.spring.helper.annotation.ReadWriteTransactional;
+import study.services.Tb1TransactionService;
+import study.services.Tb2TransactionService;
 import study.services.TransactionService;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 	@Autowired
-	private Tb1Mapper tb1Mapper;
+	private Tb1TransactionService tb1TransactionService;
 
 	@Autowired
-	private Tb2Mapper tb2Mapper;
+	private Tb2TransactionService tb2TransactionService;
 
-	// 1 private 事务不生效
-	// 2 final 事务不生效
-	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
-	public void insert(int id, boolean rollback) {
-		realTrick(id, rollback);
+	@ReadWriteTransactional
+	public void insertTest1(int start) {
+		tb1TransactionService.insert(start);
+		tb2TransactionService.insert(start);
 	}
 
-	// @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED,
-	// rollbackFor = Exception.class)
-	private void realTrick(int id, boolean rollback) {
+	//确认回滚tb2事务是否会引起tb1回滚
+	@ReadWriteTransactional
+	public void insertTest2(int start) {
+		tb1TransactionService.insert(start);
 		try {
-			Tb1 r = new Tb1();
-			r.setId(id);
-			r.setCol1("id " + id);
-			tb1Mapper.insert(r);
-
-			Tb2 tb2 = new Tb2();
-			tb2.setId(id);
-			tb2.setCol1("id " + id);
-			tb2Mapper.insert(tb2);
+			tb2TransactionService.insert(start);
 		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rollback) {
-				TransactionAspectSupport.currentTransactionStatus()
-						.setRollbackOnly();
-			}
+			System.out.println("tb2 insert failure");
 		}
 	}
 
-	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-	public void insertRequiredNew(int id, boolean rollback) {
-		realTrick(id, rollback);
+	@ReadWriteTransactional
+	public void insertTest3(int start) {
+
 	}
 }

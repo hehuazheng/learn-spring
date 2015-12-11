@@ -11,7 +11,7 @@
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.121.128:3306/study?characterEncoding=UTF8"
+			connectionURL="jdbc:mysql://qserver1:3306/study?characterEncoding=UTF8"
 			userId="root" password="root">
 		</jdbcConnection>
 
@@ -47,6 +47,11 @@
             enableDeleteByPrimaryKey="false" enableSelectByPrimaryKey="false"
             enableUpdateByPrimaryKey="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="false" />
+        </table>
+        
+		<table schema="op_log" tableName="op_log">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="mysql" type="post" identity="true"/>
         </table>
 	</context>
 </generatorConfiguration>

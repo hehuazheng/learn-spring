@@ -1,7 +1,9 @@
 package study.services;
 
 public interface TransactionService {
-	void insert(int id, boolean rollback);
+	void insertTest1(int start);
 
-	void insertRequiredNew(int id, boolean rollback);
+	void insertTest2(int start);
+
+	void insertTest3(int start);
 }
