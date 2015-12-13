@@ -32,4 +32,11 @@ public class TestController {
 		transactionService.insertTest2(id);
 		return "executed...";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/transactionTest3")
+	public String transactionTest3(int id) {
+		transactionService.insertTest3(id);
+		return "executed...";
+	}
 }
