@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- configuration file for LogBack (slf4J implementation)
-See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
-<configuration scan="true" scanPeriod="30 seconds">
-
-    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
-        <resetJUL>true</resetJUL>
-    </contextListener>
-
-    <!-- To enable JMX Management -->
-    <jmxConfigurator/>
-
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%-5level %logger{0} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-	<!--<logger name="org.hibernate" level="debug"/> -->
-   <!-- Uncomment and add your logger here:
-    <logger name="org.springframework.samples.service.service" level="debug"/> -->
-         
-    <root level="info">
-        <appender-ref ref="console"/>
-    </root>
+<!DOCTYPE configuration>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d %p [%t] [%X{sys} %X{env} %X{caller} %X{traceId}] - %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="info"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<param name="file" value="${catalina.base}/logs/info.log" />
+		<param name="Encoding" value="UTF-8" />
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/info.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %p [%t][%X{sys} %X{env} %X{caller} %X{traceId}] - %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="error"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<param name="file" value="${catalina.base}/logs/error.log" />
+		<param name="Encoding" value="UTF-8" />
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/error.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>72</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %p [%t][%X{sys} %X{env} %X{caller} %X{traceId}] - %m%n</pattern>
+		</encoder>
+	</appender>
+	<root level="info">
+		<appender-ref ref="console" />
+		<appender-ref ref="info" />
+	</root>
 </configuration>
