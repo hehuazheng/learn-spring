@@ -20,8 +20,14 @@ public class TestController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/ss")
+	@RequestMapping("/testMethodAop")
 	public String testSimpleService() {
 		return simpleService.getName();
+	}
+
+	@ResponseBody
+	@RequestMapping("/testAnnoAop")
+	public String testAnnoAop() {
+		return simpleService.testAnnotationAspect();
 	}
 }
