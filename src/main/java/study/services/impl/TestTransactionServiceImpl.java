@@ -2,31 +2,25 @@ package study.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import study.dao.mapper.Tb1Mapper;
-import study.dao.mapper.Tb2Mapper;
-import study.dao.model.Tb1;
-import study.dao.model.Tb2;
 import study.services.TestTransactionService;
+import study.services.TransactionService;
+import study.services.WrapperService;
 
 @Service
 public class TestTransactionServiceImpl implements TestTransactionService {
 	@Autowired
-	private Tb1Mapper tb1Mapper;
+	private TransactionService transactionService;
 
 	@Autowired
-	private Tb2Mapper tb2Mapper;
+	private WrapperService wrapperService;
 
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 	public String addInto2Tables(int id) {
-		Tb1 r = new Tb1();
-		r.setId(id);
-		r.setCol1("id " + id);
-		tb1Mapper.insert(r);
-
-		Tb2 tb2 = new Tb2();
-		tb2.setId(id);
-		tb2.setCol1("id " + id);
-		tb2Mapper.insert(tb2);
+		transactionService.addIntoTb1(id);
+		wrapperService.wrapInNewThread(id + 1);
 		return "succ";
 	}
 }

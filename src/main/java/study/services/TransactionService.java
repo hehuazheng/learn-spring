@@ -1,5 +1,7 @@
 package study.services;
 
 public interface TransactionService {
-	void insertIntoTwoTables(int id);
+	void addIntoTb1(int id);
+
+	void addInto2Tables(int id);
 }

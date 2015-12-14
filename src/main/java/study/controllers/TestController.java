@@ -7,14 +7,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import study.services.RecordTimeService;
 import study.services.TestTransactionService;
-import study.services.TransactionService;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
-	@Autowired
-	private TransactionService transactionService;
-
 	@Autowired
 	private TestTransactionService testTransactionService;
 	
@@ -31,7 +27,7 @@ public class TestController {
 	@ResponseBody
 	@RequestMapping("/testTrac")
 	public String testTransaction(String id) {
-		transactionService.insertIntoTwoTables(Integer.parseInt(id));
+		testTransactionService.addInto2Tables(Integer.parseInt(id));
 		return "succ";
 	}
 
