@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import study.dao.mapper.Tb1Mapper;
 import study.dao.model.Tb1;
+import study.service.RepeatableReadService;
 
 import com.pj.common.db.annotation.Read;
 import com.pj.common.db.annotation.Write;
@@ -16,6 +17,9 @@ import com.pj.common.db.annotation.Write;
 public class TestController {
 	@Autowired
 	private Tb1Mapper tb1Mapper;
+
+	@Autowired
+	private RepeatableReadService repeatableReadService;
 
 	@ResponseBody
 	@RequestMapping("/hw")
@@ -28,6 +32,12 @@ public class TestController {
 	@RequestMapping("/read")
 	public Tb1 read(int id) {
 		return tb1Mapper.selectByPrimaryKey(id);
+	}
+
+	@ResponseBody
+	@RequestMapping("/rread")
+	public void repeatableRead(int id, int times) {
+		repeatableReadService.repeatableRead(id, times);
 	}
 
 	@Write
