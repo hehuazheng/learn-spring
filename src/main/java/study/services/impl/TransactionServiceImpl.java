@@ -17,7 +17,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
 	private Tb2TransactionService tb2TransactionService;
-	
+
 	@Autowired
 	private TransactionWrapperService transactionWrapperService;
 
@@ -40,19 +40,28 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@ReadWriteTransactional
 	public void insertTest3(int start) {
-//		final Tb1TransactionService t1 = tb1TransactionService;
-//		final Tb2TransactionService t2 = tb2TransactionService;
 		final int start2 = start;
 		tb1TransactionService.insert(start);
 		try {
-		transactionWrapperService.wrap(new Callback() {
-			public Object call() {
-				tb2TransactionService.insert(start2);
-				return null;
-			}
-		});
+			transactionWrapperService.wrap(new Callback() {
+				public Object call() {
+					tb2TransactionService.insert(start2);
+					return null;
+				}
+			});
 		} catch (Exception e) {
 			System.out.println("tb2 insert failure");
 		}
 	}
+
+	@ReadWriteTransactional
+	public void transactionInNewThread(final int start) {
+		tb1TransactionService.insert(start);
+		new Thread() {
+			public void run() {
+				tb2TransactionService.insert(start);
+			}
+		}.start();
+	}
+
 }

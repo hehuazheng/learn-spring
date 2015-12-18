@@ -6,4 +6,6 @@ public interface TransactionService {
 	void insertTest2(int start);
 
 	void insertTest3(int start);
+	
+	void transactionInNewThread(int start);
 }
