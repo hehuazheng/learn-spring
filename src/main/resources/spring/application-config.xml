@@ -33,14 +33,6 @@
 		destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"
-			value="jdbc:mysql://qserver1:3306/study?characterEncoding=UTF8" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
-	</bean>
-	<bean id="readDataSource2" class="com.jolbox.bonecp.BoneCPDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl"
 			value="jdbc:mysql://qserver1:3306/studyread?characterEncoding=UTF8" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
@@ -62,7 +54,6 @@
         <property name="readDataSourceMap">
             <map key-type="java.lang.String" value-type="javax.sql.DataSource">
                 <entry key="read1" value-ref="readDataSource1" />
-                <entry key="read2" value-ref="readDataSource2" />
             </map>
         </property>
     </bean>
