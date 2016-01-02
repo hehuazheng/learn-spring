@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import study.service.SimpleService;
+import study.service.ActiveMqService;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
-	private SimpleService simpleService;
+	private ActiveMqService activeMqService;
 
 	@ResponseBody
 	@RequestMapping("/hw")
@@ -21,7 +21,8 @@ public class TestController {
 
 	@ResponseBody
 	@RequestMapping("/ss")
-	public String testSimpleService() {
-		return simpleService.getName();
+	public String testActiveMqService(String message) {
+		activeMqService.sendMessage(message);
+		return "succ";
 	}
 }
