@@ -61,5 +61,13 @@
 		<property name="defaultDestination" ref="destination"></property>
 		<property name="receiveTimeout" value="600"></property>
 	</bean>
+	
+	<bean id="messageListener" class="study.common.DefaultMessageListener" />
+	<bean id="jmsContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsFactory" />
+		<property name="destination" ref="destination" />
+		<property name="messageListener" ref="messageListener" />
+	</bean>
 
 </beans>
