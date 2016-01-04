@@ -49,6 +49,7 @@
 				<property name="brokerURL">
 					<value>tcp://qserver1:61616</value>
 				</property>
+<!-- 				<property name="exclusiveConsumer" value="true"></property> -->
 			</bean>
 		</property>
 	</bean>
