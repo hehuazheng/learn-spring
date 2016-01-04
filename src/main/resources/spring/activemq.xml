@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:amq="http://activemq.apache.org/schema/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd">
+    <!-- brokerURL=failover:(tcp://activemq1:61616,tcp://activemq2:61616)?randomize=false -->
+    <amq:connectionFactory id="mqFactory" brokerURL="tcp://activemq.com:61616" />
+
+    <amq:queue id="testQueue1" physicalName="testQueue1" />
+    <amq:topic id="testTopic1" physicalName="testTopic1" />
+
+    <bean id="myMessageConverter" class="com.activemq.util.MyMessageConverter" />
+    <bean id="myListener" class="com.activemq.listeners.MyMessageListener">
+        <property name="convertor" ref="myMessageConverter"></property>
+    </bean>
+
+    <bean id="myTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <bean
+                class="org.springframework.jms.connection.SingleConnectionFactory">
+                <property name="targetConnectionFactory" ref="mqFactory" />
+            </bean>
+        </property>
+        <property name="messageConverter" ref="myMessageConverter" />
+    </bean>
+
+    <bean id="testQueueProducer" class="com.activemq.util.MyMessageProducer">
+        <property name="template" ref="myTemplate" />
+        <property name="destination" ref="testQueue1" />
+    </bean>
+    <bean id="testTopicProducer" class="com.activemq.util.MyMessageProducer">
+        <property name="template" ref="myTemplate" />
+        <property name="destination" ref="testTopic1" />
+    </bean>
+
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="mqFactory" />
+        <property name="destination" ref="testQueue1" />
+        <property name="messageListener" ref="myListener" />
+    </bean>
+
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="mqFactory" />
+        <property name="destination" ref="testTopic1" />
+        <property name="messageListener" ref="myListener" />
+    </bean>
+</beans>

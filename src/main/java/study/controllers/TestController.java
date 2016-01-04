@@ -20,9 +20,16 @@ public class TestController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/ss")
+	@RequestMapping("/qsend")
 	public String testActiveMqService(String message) {
-		activeMqService.sendMessage(message);
+		activeMqService.sendQueueMessage(message);
+		return "succ";
+	}
+
+	@ResponseBody
+	@RequestMapping("/tsend")
+	public String testSendTopicActiveMqService(String message) {
+		activeMqService.sendTopicMessage(message);
 		return "succ";
 	}
 }
