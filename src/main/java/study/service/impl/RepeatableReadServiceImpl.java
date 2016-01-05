@@ -8,7 +8,7 @@ import study.dao.model.Tb1;
 import study.service.RepeatableReadService;
 
 import com.alibaba.fastjson.JSON;
-import com.pj.common.db.annotation.Read;
+import com.hhz.spring.db.annotation.Read;
 
 @Service
 public class RepeatableReadServiceImpl implements RepeatableReadService {

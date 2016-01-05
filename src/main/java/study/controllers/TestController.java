@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import study.dao.mapper.Tb1Mapper;
 import study.dao.model.Tb1;
 import study.service.RepeatableReadService;
+import study.service.TransactionService;
 
-import com.pj.common.db.annotation.Read;
-import com.pj.common.db.annotation.Write;
+import com.hhz.spring.db.annotation.Read;
+import com.hhz.spring.db.annotation.Write;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
 	private Tb1Mapper tb1Mapper;
+
+	@Autowired
+	private TransactionService transactionService;
 
 	@Autowired
 	private RepeatableReadService repeatableReadService;
@@ -46,4 +50,17 @@ public class TestController {
 	public Tb1 write(int id) {
 		return tb1Mapper.selectByPrimaryKey(id);
 	}
+
+	@ResponseBody
+	@RequestMapping("/tread")
+	public Tb1 tread(int id) {
+		return transactionService.read(id);
+	}
+
+	@ResponseBody
+	@RequestMapping("/twrite")
+	public Tb1 twrite(int id) {
+		return transactionService.write(id);
+	}
+
 }

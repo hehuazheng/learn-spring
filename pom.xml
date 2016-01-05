@@ -34,8 +34,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.pj</groupId>
-            <artifactId>common-db</artifactId>
+            <groupId>com.hhz</groupId>
+            <artifactId>springdb</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
