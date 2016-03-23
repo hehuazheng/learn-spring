@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import study.services.RecordTimeService;
 import study.services.TestTransactionService;
 
 @Controller
@@ -13,17 +12,14 @@ import study.services.TestTransactionService;
 public class TestController {
 	@Autowired
 	private TestTransactionService testTransactionService;
-	
-	@Autowired
-	private RecordTimeService recordTimeService;
-	
+
 	@ResponseBody
 	@RequestMapping("/testAdd")
 	public String testAddInto2TablesTransaction(String id) {
 		testTransactionService.addInto2Tables(Integer.parseInt(id));
 		return "succ";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/testTrac")
 	public String testTransaction(String id) {
@@ -38,9 +34,9 @@ public class TestController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/m1")
-	public String testM1() {
-		recordTimeService.m1();
+	@RequestMapping("/addIn2Db")
+	public String testAddIn2Db(int startId, String value) {
+		testTransactionService.addIn2Db(startId, value);
 		return "m1...";
 	}
 }

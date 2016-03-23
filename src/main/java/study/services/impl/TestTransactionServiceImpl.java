@@ -23,4 +23,11 @@ public class TestTransactionServiceImpl implements TestTransactionService {
 		wrapperService.wrapInNewThread(id + 1);
 		return "succ";
 	}
+
+	@Override
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
+	public void addIn2Db(int startId, String value) {
+		transactionService.addListIntoTb1(startId, value);
+		transactionService.addListIntoS2Tb1(startId, value);
+	}
 }
