@@ -5,18 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hhz.multiple.transaction.service.MultipleTransactionService;
+import study.services.AsyncService;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
-	private MultipleTransactionService multipleTransactionService;
-	
+	private AsyncService asyncService;
+
 	@ResponseBody
-	@RequestMapping("/m1")
-	public String multipleTest(int id) {
-		multipleTransactionService.multipleTransactionTest(id);
-		return "m1...";
+	@RequestMapping("/async")
+	public String async(int id, String value) {
+		asyncService.asyncUpdatSequence(id, value);
+		return "async...";
 	}
 }

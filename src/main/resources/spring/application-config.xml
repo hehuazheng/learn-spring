@@ -11,7 +11,7 @@
 		      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="study,com.hhz"></context:component-scan>
+	<context:component-scan base-package="study"></context:component-scan>
 	
 	<bean
         class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
@@ -41,8 +41,6 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"
-		proxy-target-class="false" />
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:/spring/mybatis-config.xml"></property>
@@ -60,15 +58,14 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="multiple*" propagation="REQUIRED" />
+            <tx:method name="asyncUpdate*" propagation="REQUIRED" />
             <tx:method name="*" propagation="SUPPORTS" read-only="true" />
         </tx:attributes>
     </tx:advice>
     
     <aop:config  proxy-target-class="true">                                                                                              
-        <aop:pointcut id="allServicesMethod" expression="execution(* com.hhz..*(..))" />
+        <aop:pointcut id="allServicesMethod" expression="execution(* study.services..*(..))" />
         <aop:advisor pointcut-ref="allServicesMethod" advice-ref="txAdvice"  />
     </aop:config>
-<!-- 	<bean class="study.aop.MyTracingBeanPostProcessor" /> -->
-	
 	<aop:aspectj-autoproxy />
 </beans>
