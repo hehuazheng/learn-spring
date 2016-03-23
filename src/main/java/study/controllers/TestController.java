@@ -5,18 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import study.services.AsyncService;
+import study.services.AsyncWrapperService;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
-	private AsyncService asyncService;
+	private AsyncWrapperService asyncWrapperService;
 
 	@ResponseBody
 	@RequestMapping("/async")
 	public String async(int id, String value) {
-		asyncService.asyncUpdatSequence(id, value);
+		asyncWrapperService.wrap(id, value);
 		return "async...";
 	}
 }

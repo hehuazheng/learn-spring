@@ -57,9 +57,7 @@
     
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="multiple*" propagation="REQUIRED" />
-            <tx:method name="asyncUpdate*" propagation="REQUIRED" />
-            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="asyncUpdate*" propagation="REQUIRED" read-only="false" />
         </tx:attributes>
     </tx:advice>
     
