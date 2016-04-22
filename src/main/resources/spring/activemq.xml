@@ -3,11 +3,14 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
   http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd">
     <!-- brokerURL=failover:(tcp://activemq1:61616,tcp://activemq2:61616)?randomize=false -->
-    <amq:connectionFactory id="mqFactory" brokerURL="tcp://activemq.com:61616" />
+    <amq:connectionFactory id="mqFactory" brokerURL="tcp://activemq.com:61616">
+    	<property name="redeliveryPolicy" ref="activeMQRedeliveryPolicy"></property>
+    </amq:connectionFactory>
 
     <amq:queue id="testQueue1" physicalName="testQueue1" />
     <amq:topic id="testTopic1" physicalName="testTopic1" />
-
+	<amq:redeliveryPolicy id="activeMQRedeliveryPolicy" redeliveryDelay="100" maximumRedeliveries="2" />
+	
     <bean id="myMessageConverter" class="com.activemq.util.MyMessageConverter" />
     <bean id="myListener" class="com.activemq.listeners.MyMessageListener">
         <property name="convertor" ref="myMessageConverter"></property>
@@ -21,6 +24,8 @@
             </bean>
         </property>
         <property name="messageConverter" ref="myMessageConverter" />
+        <!-- 不用设置也能失败重试 -->
+<!--         <property name="sessionAcknowledgeMode" value="2" /> -->
     </bean>
 
     <bean id="testQueueProducer" class="com.activemq.util.MyMessageProducer">
@@ -37,6 +42,7 @@
         <property name="connectionFactory" ref="mqFactory" />
         <property name="destination" ref="testQueue1" />
         <property name="messageListener" ref="myListener" />
+        <property name="sessionTransacted" value="true"></property>
     </bean>
 
     <bean
