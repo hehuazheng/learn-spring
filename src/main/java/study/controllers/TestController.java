@@ -5,23 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import study.service.SimpleService;
+import study.MyApplicationContextAware;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
-	private SimpleService simpleService;
+	private MyApplicationContextAware myApplicationContextAware;
 
 	@ResponseBody
 	@RequestMapping("/hw")
 	public String testHelloWorld(String world) {
+		myApplicationContextAware.publishEvent(world);
 		return "hello, " + world;
-	}
-
-	@ResponseBody
-	@RequestMapping("/ss")
-	public String testSimpleService() {
-		return simpleService.getName();
 	}
 }
