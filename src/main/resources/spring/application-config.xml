@@ -13,14 +13,14 @@
 	<context:annotation-config />
 	<context:component-scan base-package="study"></context:component-scan>
 	<bean id="simpleTask" class="study.service.SimpleTask"></bean>
-	<bean id="simpleTaskFactory" class="com.taobao.pamirs.schedule.strategy.TBScheduleManagerFactory">
+	<bean id="SimpleSchedule" class="com.taobao.pamirs.schedule.strategy.TBScheduleManagerFactory" init-method="init">
 		<property name="zkConfig">
 			<map key-type="java.lang.String" value-type="java.lang.String">
 				<entry key="zkConnectString" value="qserver1:2181"></entry>
-				<entry key="rootPath" value="/tbSchedule/Test"></entry>
+				<entry key="rootPath" value="/taobao-pamirs-schedule/huijin"></entry>
 				<entry key="zkSessionTimeout" value="60000"></entry>
-				<entry key="userName" value="zookeeper"></entry>
-				<entry key="password" value="zookeeper"></entry>
+				<entry key="userName" value="ScheduleAdmin"></entry>
+				<entry key="password" value="password"></entry>
 				<entry key="isCheckParentPath" value="true"></entry>
 			</map>
 		</property>
