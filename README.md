@@ -4,3 +4,6 @@ br: multi-datasource-20160323
 
 # activemq
 需要设置consumer失败重试时需要在onMessage里抛出异常，具体配置参照分支
+
+# tbschedule
+http://www.mamicode.com/info-detail-868779.html
