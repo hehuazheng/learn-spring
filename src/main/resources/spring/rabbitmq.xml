@@ -17,15 +17,24 @@
     <rabbit:queue id="queue_one" durable="true" auto-delete="false" exclusive="false" name="queue_one"/>
     <rabbit:direct-exchange name="my-mq-exchange" durable="true" auto-delete="false" id="my-mq-exchange">
         <rabbit:bindings>
-            <rabbit:binding queue="queue_one" key="queue_one_key"/>
+            <rabbit:binding queue="queue_one" key="queue_one"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
-    <rabbit:template exchange="my-mq-exchange" id="amqpTemplate"  connection-factory="connectionFactory" />
-<!--     <task:executor id="taskExecutor" pool-size="4-256" queue-capacity="128" /> -->
-<!--     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" task-executor="taskExecutor"> -->
-<!--         <rabbit:listener queues="queue_one" ref="queueOneListener"/> -->
-<!--     </rabbit:listener-container> -->
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
+    <rabbit:template exchange="my-mq-exchange" id="amqpTemplate"  connection-factory="connectionFactory"  message-converter="jsonMessageConverter" />
+
+    <!-- 消息对象json转换类 -->
+    <bean id="jsonMessageConverter" class="study.mq.FastJsonMessageConverter" /> 
+    
+<!--     <bean class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer"> -->
+<!--         <constructor-arg ref="connectionFactory"></constructor-arg> -->
+<!--         <property name="prefetchCount" value="2"></property> -->
+<!--         <property name="queues" value="2"></property> -->
+<!--         <property name="concurrentConsumers" value="queue_one"></property> -->
+<!--         <property name="maxConcurrentConsumers" value="2"></property> -->
+<!--         <property name="messageListener" ref="queueOneListener"></property> -->
+<!--     </bean> -->
+    
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" concurrency="2" prefetch="2">
         <rabbit:listener queues="queue_one" ref="queueOneListener"/>
     </rabbit:listener-container>
 </beans>
