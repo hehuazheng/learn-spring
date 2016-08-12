@@ -25,16 +25,16 @@
     <!-- 消息对象json转换类 -->
     <bean id="jsonMessageConverter" class="study.mq.FastJsonMessageConverter" /> 
     
-<!--     <bean class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer"> -->
-<!--         <constructor-arg ref="connectionFactory"></constructor-arg> -->
-<!--         <property name="prefetchCount" value="2"></property> -->
-<!--         <property name="queues" value="2"></property> -->
-<!--         <property name="concurrentConsumers" value="queue_one"></property> -->
-<!--         <property name="maxConcurrentConsumers" value="2"></property> -->
-<!--         <property name="messageListener" ref="queueOneListener"></property> -->
-<!--     </bean> -->
-    
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" concurrency="2" prefetch="2">
         <rabbit:listener queues="queue_one" ref="queueOneListener"/>
     </rabbit:listener-container>
+    
+     <bean id="messageProducer" class="com.secoo.arch.rabbitmq.DefaultRabbitMessageProducer">
+        <property name="template" ref="amqpTemplate"></property>
+     </bean>
+     
+    <bean class="com.secoo.arch.rabbitmq.RabbitJmsMessageSender">
+       <property name="messageProducer" ref="messageProducer"></property>
+       <property name="system" value="learn-spring"></property>
+    </bean>
 </beans>
