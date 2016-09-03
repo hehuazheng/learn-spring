@@ -48,7 +48,7 @@
         <property name="configLocation" value="classpath:/spring/mybatis-config.xml"></property>
         <property name="mapperLocations">
             <list>
-                <value>classpath:study/dao/**/*Mapper.xml</value>
+                <value>classpath:study/**/*Mapper.xml</value>
             </list>
         </property>
     </bean>
@@ -76,13 +76,30 @@
         <property name="configLocation" value="classpath:/spring/mybatis-config.xml"></property>
         <property name="mapperLocations">
             <list>
-                <value>classpath:study/s2/dao/**/*Mapper.xml</value>
+                <value>classpath:study/**/*Mapper.xml</value>
             </list>
         </property>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2" />
-        <property name="basePackage" value="study.s2.dao"></property>
+        <property name="basePackage" value="study.**.dao"></property>
     </bean>
+    
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+    <tx:advice id="s2txAdvice" transaction-manager="s2TransactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config>
+        <aop:pointcut id="fooServiceOperation" expression="execution(* study.services.**.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceOperation"/>
+        <aop:advisor advice-ref="s2txAdvice" pointcut-ref="fooServiceOperation"/>
+    </aop:config>
     <aop:aspectj-autoproxy />
 </beans>

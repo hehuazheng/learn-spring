@@ -43,7 +43,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from s2_tb1
+    from s2tb1
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -52,17 +52,17 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="study.s2.dao.model.S2Tb1Example" >
-    delete from s2_tb1
+    delete from s2tb1
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="study.s2.dao.model.S2Tb1" >
-    insert into s2_tb1 (id, col1)
+    insert into s2tb1 (id, col1)
     values (#{id,jdbcType=INTEGER}, #{col1,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="study.s2.dao.model.S2Tb1" >
-    insert into s2_tb1
+    insert into s2tb1
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,

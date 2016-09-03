@@ -14,29 +14,9 @@ public class TestController {
 	private TestTransactionService testTransactionService;
 
 	@ResponseBody
-	@RequestMapping("/testAdd")
-	public String testAddInto2TablesTransaction(String id) {
-		testTransactionService.addInto2Tables(Integer.parseInt(id));
-		return "succ";
-	}
-
-	@ResponseBody
-	@RequestMapping("/testTrac")
-	public String testTransaction(String id) {
-		testTransactionService.addInto2Tables(Integer.parseInt(id));
-		return "succ";
-	}
-
-	@ResponseBody
-	@RequestMapping("/hw")
-	public String testHelloWorld(String world) {
-		return "hello, " + world;
-	}
-
-	@ResponseBody
 	@RequestMapping("/addIn2Db")
-	public String testAddIn2Db(int startId, String value) {
-		testTransactionService.addIn2Db(startId, value);
+	public String testAddIn2Db(int startId, String value, int type) {
+		testTransactionService.addIn2Db(startId, value, type);
 		return "m1...";
 	}
 }
