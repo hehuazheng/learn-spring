@@ -97,7 +97,8 @@
     </tx:advice>
     
     <aop:config>
-        <aop:pointcut id="fooServiceOperation" expression="execution(* study.services.**.*(..))"/>
+        <aop:pointcut id="fooServiceOperation" expression="@annotation(study.annotation.MyTransactionalPointcut)"/>
+<!--         <aop:pointcut id="fooServiceOperation" expression="execution(* study.services.**.*(..))"/> -->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceOperation"/>
         <aop:advisor advice-ref="s2txAdvice" pointcut-ref="fooServiceOperation"/>
     </aop:config>

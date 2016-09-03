@@ -3,6 +3,7 @@ package study.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import study.annotation.MyTransactionalPointcut;
 import study.dao.mapper.Tb1Mapper;
 import study.dao.model.Tb1;
 import study.s2.dao.mapper.S2Tb1Mapper;
@@ -17,6 +18,7 @@ public class TestTransactionServiceImpl implements TestTransactionService {
 	private S2Tb1Mapper s2Tb1Mapper;
 	
 	@Override
+	@MyTransactionalPointcut
 	public void addIn2Db(int startId, String value, int type) {
 		addInS1(startId, value);
 		if(type == 1) {
