@@ -10,6 +10,7 @@ import study.dao.mapper.Tb2Mapper;
 import study.dao.model.Tb1;
 import study.dao.model.Tb2;
 import study.services.TransactionService;
+import study.util.SpringContextUtil;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -40,5 +41,11 @@ public class TransactionServiceImpl implements TransactionService {
 		r.setId(id);
 		r.setCol1("id " + id);
 		tb1Mapper.insert(r);
+	}
+
+	@Override
+	public void testInherit(int id) {
+		SubComponent sc = SpringContextUtil.getBean("comp2", SubComponent.class);
+		sc.insertA(4);
 	}
 }
