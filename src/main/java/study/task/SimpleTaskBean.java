@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 import com.taobao.pamirs.schedule.IScheduleTaskDealSingle;
 import com.taobao.pamirs.schedule.TaskItemDefine;
 
-@Component
+//@Component
 public class SimpleTaskBean implements IScheduleTaskDealSingle<String> {
 
 	@Override
