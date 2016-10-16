@@ -80,4 +80,8 @@
       </if>
     </trim>
   </insert>
+
+  <update id="updateCol">
+    update tb1 set col1=#{val} where id=#{id}
+  </update>
 </mapper>

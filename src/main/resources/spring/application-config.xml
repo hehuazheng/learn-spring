@@ -58,12 +58,12 @@
 	
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 	   <tx:attributes>
-	       <tx:method name="insertInto*" propagation="REQUIRED" />
+	       <tx:method name="insert*" propagation="REQUIRED" />
+	       <tx:method name="update*" propagation="REQUIRED" />
+	       <tx:method name="*" propagation="SUPPORTS" read-only="true" />
 	   </tx:attributes>
 	</tx:advice>
-	
-	<bean class="study.aop.MyTracingBeanPostProcessor" />
-	
+
 	<aop:config>
 	   <aop:pointcut expression="execution(* study.services..*(..))" id="allTransactionalServicePointcut"/>
 	   <aop:advisor pointcut-ref="allTransactionalServicePointcut" advice-ref="txAdvice" />

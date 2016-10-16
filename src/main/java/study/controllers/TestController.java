@@ -31,9 +31,20 @@ public class TestController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/m1")
-	public String testM1() {
-		recordTimeService.m1();
-		return "m1...";
+	@RequestMapping("/t1")
+	public String testInsert(int id, String val) {
+		try {
+			transactionService.updateById(id, val);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "exec";
+	}
+
+	@ResponseBody
+	@RequestMapping("/read")
+	public String testRead(int id) {
+		transactionService.read(id);
+		return "read completed.";
 	}
 }
