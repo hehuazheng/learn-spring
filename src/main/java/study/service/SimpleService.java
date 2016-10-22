@@ -1,5 +1,7 @@
 package study.service;
 
 public interface SimpleService {
-	String getName();
+    String anno1();
+
+    String annoBoth();
 }

@@ -16,12 +16,18 @@ public class TestController {
 	@ResponseBody
 	@RequestMapping("/hw")
 	public String testHelloWorld(String world) {
-		return "hello, " + world;
+		return "hel11o, " + world;
 	}
 
 	@ResponseBody
-	@RequestMapping("/ss")
-	public String testSimpleService() {
-		return simpleService.getName();
+	@RequestMapping("/anno1")
+	public String anno1() {
+		return simpleService.anno1();
+	}
+
+	@ResponseBody
+	@RequestMapping("/anno2")
+	public String anno12() {
+		return simpleService.annoBoth();
 	}
 }
