@@ -4,3 +4,7 @@ br: multi-datasource-20160323
 
 # activemq
 需要设置consumer失败重试时需要在onMessage里抛出异常，具体配置参照分支
+
+
+# spring aop
+使用时扫描Controller 时必须排除org.springframework.stereotype.Service或Component，否则将导致aop不生效
