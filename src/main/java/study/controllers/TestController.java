@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import study.service.MyHiveDao;
 import study.service.SimpleService;
 
 @Controller
@@ -12,6 +13,9 @@ import study.service.SimpleService;
 public class TestController {
 	@Autowired
 	private SimpleService simpleService;
+
+	@Autowired
+	private MyHiveDao myHiveDao;
 
 	@ResponseBody
 	@RequestMapping("/hw")
@@ -23,5 +27,11 @@ public class TestController {
 	@RequestMapping("/ss")
 	public String testSimpleService() {
 		return simpleService.getName();
+	}
+
+	@ResponseBody
+	@RequestMapping("/hive")
+	public String testMyHiveDao() {
+		return myHiveDao.showSth("a");
 	}
 }
