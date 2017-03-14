@@ -127,6 +127,22 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
+
+	<build>
+		<finalName>learn-spring</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<port>8080</port>
+					<path>/spring</path>
+					<uriEncoding>UTF-8</uriEncoding>
+					<server>tomcat7</server>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

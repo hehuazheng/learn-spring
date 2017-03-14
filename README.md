@@ -8,3 +8,5 @@ br: multi-datasource-20160323
 
 # spring aop
 使用时扫描Controller 时必须排除org.springframework.stereotype.Service或Component，否则将导致aop不生效
+
+修复string responsebody中文乱码
